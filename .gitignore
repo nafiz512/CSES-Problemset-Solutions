@@ -3,3 +3,6 @@
 
 # Compiled executables
 *.exe
+
+#ignore test file
+*test.cpp
