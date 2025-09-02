@@ -23,38 +23,48 @@ void solve()
 {
     int n;
     cin>>n;
-    int x;
-    cin>>x;
-    vector<int>v(n);
+    string s[n];
     for(int i=0;i<n;i++)
     {
-        cin>>v[i];
+        cin>>s[i];
     }
-    sort(all(v));
-    // vector<vector<int>>dp(n,vector<int>(x+1));
-    int dp[n+1][x+1];
+    if(s[0][0]=='*' || s[n-1][n-1]=='*')
+    {
+        cout<<0<<endl;
+        return;
+    }
+    int dp[n][n];
     for(int i=0;i<n;i++)
     {
-        for(int sum=0;sum<=x;sum++)
+        for(int j=0;j<n;j++)
         {
-            if(sum==0)
+            if(i==0 && j==0)
             {
-                dp[i][sum]=1;
+                dp[i][j]=1;
+                continue;
             }
-            else
+            int ui=i-1,uj=j;
+            int di=i,dj=j-1;
+            int p1=0;
+            if(ui>=0 && ui<n && uj>=0 && uj<n)
             {
-                int op1 = (v[i] > sum) ? 0 : dp[i][sum - v[i]];
-                int op2 = (i == 0) ? 0 : dp[i-1][sum];
-                dp[i][sum] = (op1 + op2) % mod;
-                
+                if(s[ui][uj]=='.')
+                    p1=dp[ui][uj];
+            } 
+            int p2=0;
+            if(di>=0 && di<n && dj>=0 && dj<n)
+            {
+                if(s[di][dj]=='.')
+                    p2=dp[di][dj];
             }
+            dp[i][j]=(p1+p2)%mod;
         }
     }
-    cout<<dp[n-1][x]<<endl;
+    cout<<dp[n-1][n-1]<<endl;
 }
 signed main()
 {
-    //fast;
+    fast;
     //solve(); return 0;
     int t=1;
     //cin>>t;
